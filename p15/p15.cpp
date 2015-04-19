@@ -1,65 +1,25 @@
-
+#include <iostream>
 using namespace std ;
 
-#include <cstdio>
 
-class point
+unsigned long long  nChoosek( unsigned n, unsigned k )
 {
-	public:
-	int x,y;
+        if (k > n) return 0;
+        if (k * 2 > n) k = n-k;
+        if (k == 0) return 1;
 
-
-	void set_values(int a,int b)
-	{
-		x=a;
-		y=b;
-	}
-};
-class particle : public point 
-{
-	public:
-	void move_down( void )
-	{
-		y -= 1;
-	}
-	void move_right( void )
-	{
-		x += 1;
-	}
-};
-
-
-
-
-
-
-
-int count_path( particle part , point pnt )
-{
-	if ( part.x == pnt.x && part.y == pnt.y ) return 1 ;
-	if ( part.x > pnt.x || part.y < pnt.y ) return 0 ;
-
-	particle part_down, part_right;
-	part_down.set_values(part.x,part.y-1);
-	part_right.set_values(part.x+1,part.y);
-
-	return count_path(part_down,pnt) + count_path(part_right,pnt) ;
-} 
-
-
+        long result = n;
+        for( int i = 2; i <= k; ++i ) {
+           result *= (n-i+1);
+           result /= i;
+        }
+        return result;
+}
 int main( void )
 {
-	particle part, goal ;
-	part.set_values(0,0);
-	goal.set_values(20,-20);
-	int paths = count_path( part, goal);
-
-	printf("%d\n",paths);
-  
-	return 0 ;
+    cout << nChoosek( 40 , 20 ) ;
+    return 0 ;
 }
-
-
 
 
 
